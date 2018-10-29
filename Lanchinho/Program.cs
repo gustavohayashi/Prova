@@ -21,7 +21,7 @@ namespace Lanchinho
                 double total = 0;
                 string resultado = "";
 
-                Stream entrada = File.Open("entrada.txt", FileMode.Open);
+                Stream entrada = File.Open(arquivo, FileMode.Open);
                 StreamReader leitor = new StreamReader(entrada);
                 string linha = leitor.ReadLine();
                 string[] items = linha.Split(' ');
@@ -52,7 +52,7 @@ namespace Lanchinho
                         resultado = String.Format("Total: R$ {0:0.00}", total);
                         break;
                     default:
-                        resultado = "Erro! Item de código " + entrada + " não registrado!";
+                        resultado = "Erro! Item de código " + codigo + " não registrado!";
                         break;
                 }
                 leitor.Close();
