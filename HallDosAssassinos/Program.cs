@@ -12,13 +12,16 @@ namespace HallDosAssassinos
     {
         static void Main(string[] args)
         {
-            if (File.Exists("entrada.txt"))
+            Console.WriteLine("Digite o caminho para o arquivo de entrada");
+            string arquivo = Console.ReadLine();
+            if (File.Exists(arquivo))
             {
 
                 SortedList assassinos = new SortedList(); //Lista contendo assassinos
                 ArrayList assassinados = new ArrayList(); //Lista contendo assassinados
 
-                Stream entrada = File.Open("entrada.txt", FileMode.Open);
+                Stream entrada = File.Open(arquivo, FileMode.Open);
+
                 StreamReader leitor = new StreamReader(entrada);
                 string linha = leitor.ReadLine();
 
@@ -57,26 +60,20 @@ namespace HallDosAssassinos
                     }
                 }
 
-                Stream saida = File.Open("saida.txt", FileMode.Create);
-                StreamWriter writer = new StreamWriter(saida);
-                writer.WriteLine("HALL DOS ASSASSINOS");
+                Console.WriteLine("HALL DOS ASSASSINOS");
 
                 //É escrito no arquivo de saída o nome do assassino e o número de mortes causadas por ele
                 foreach (DictionaryEntry assassino in assassinos)
                 {
-                    writer.WriteLine("{0} {1}", assassino.Key.ToString(), assassino.Value.ToString());
+                    Console.WriteLine("{0} {1}", assassino.Key.ToString(), assassino.Value.ToString());
                 }
-                writer.Close();
-                saida.Close();
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("Arquivo de leitura \"entrada.exe\" não encontrado!");
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
+                Console.WriteLine("Arquivo de leitura no endereço especificado \"{0}\" não encontrado!",arquivo);
             }
+            Console.WriteLine("Fim de Execução.Pressione qualquer tecla para fechar o programa.");
+            Console.ReadKey();
         }
     }
 

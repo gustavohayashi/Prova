@@ -12,7 +12,9 @@ namespace GenioDeAdivinhacao
     {
         static void Main(string[] args)
         {
-            if (File.Exists("entrada.txt"))
+            Console.WriteLine("Digite o caminho para o arquivo de entrada");
+            string arquivo = Console.ReadLine();
+            if (File.Exists(arquivo))
             {
                 bool isQueue = true;
                 bool isStack = true;
@@ -22,12 +24,9 @@ namespace GenioDeAdivinhacao
                 List<int> priorityQueue = new List<int>();
                 Stack<int> stack = new Stack<int>();
 
-                Stream entrada = File.Open("entrada.txt", FileMode.Open);
+                Stream entrada = File.Open(arquivo, FileMode.Open);
                 StreamReader leitor = new StreamReader(entrada);
                 string linha = leitor.ReadLine();
-
-                Stream saida = File.Open("saida.txt", FileMode.Create);
-                StreamWriter writer = new StreamWriter(saida);
 
                 while (linha != null)
                 {
@@ -35,13 +34,12 @@ namespace GenioDeAdivinhacao
                     {
                         linha = leitor.ReadLine();
 
-                        Console.WriteLine(linha);
-
                         string[] leitura = linha.Split(' ');
                         int operacao = Int32.Parse(leitura[0]);
                         int valor = Int32.Parse(leitura[1]);
                         if (operacao == 1) //Operação de inserir valor na sacola
                         {
+                            //Armazena o elemento recebido
                             queue.Enqueue(valor);
                             priorityQueue.Add(valor);
                             priorityQueue.Sort();
@@ -75,31 +73,32 @@ namespace GenioDeAdivinhacao
                         }
 
                     }
+
                     if (isStack || isPriorityQueue || isQueue)
                     {
                         //Caso haja mais de uma possibilidade de estrutura de dados utilizada
                         if ((isStack && isPriorityQueue) || (isStack && isQueue) || (isPriorityQueue && isQueue))
                         {
-                            writer.WriteLine("not sure");
+                            Console.WriteLine("not sure");
                         }
                         else if (isStack)
                         {
-                            writer.WriteLine("stack");
+                            Console.WriteLine("stack");
                         }
                         else if (isPriorityQueue)
                         {
-                            writer.WriteLine("priority queue");
+                            Console.WriteLine("priority queue");
                         }
                         else
                         {
-                            writer.WriteLine("queue");
+                            Console.WriteLine("queue");
                         }
 
                     }
                     else
                     {
                         //Impossível ser qualquer uma das estruturas de dados
-                        writer.WriteLine("impossible");
+                        Console.WriteLine("impossible");
                     }
 
                     //Esvazia as listas/pilhas utilizadas e reinicializa as variáveis booleanas utilizadas
@@ -113,18 +112,13 @@ namespace GenioDeAdivinhacao
                 }
                 leitor.Close();
                 entrada.Close();
-                writer.Close();
-                saida.Close();
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("Arquivo de leitura \"entrada.exe\" não encontrado!");
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
+                Console.WriteLine("Arquivo de leitura no endereço especificado \"{0}\" não encontrado!", arquivo);
             }
-
+            Console.WriteLine("Fim de Execução.Pressione qualquer tecla para fechar o programa.");
+            Console.ReadKey();
         }
     }
 }

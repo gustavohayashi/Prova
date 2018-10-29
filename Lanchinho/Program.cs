@@ -12,61 +12,67 @@ namespace Lanchinho
     {
         static void Main(string[] args)
         {
-            if (File.Exists("entrada.txt"))
+            Console.WriteLine("Digite o caminho para o arquivo de entrada");
+            string arquivo = Console.ReadLine();
+            if (File.Exists(arquivo))
             {
                 int codigo;
                 int qtde;
                 double total = 0;
+                string resultado = "";
 
                 Stream entrada = File.Open("entrada.txt", FileMode.Open);
                 StreamReader leitor = new StreamReader(entrada);
                 string linha = leitor.ReadLine();
-                while (linha != null)
+                string[] items = linha.Split(' ');
+
+                qtde = Int32.Parse(items[1]);
+                codigo = Int32.Parse(items[0]);
+
+                switch (codigo)
                 {
-                    string[] items = linha.Split(' ');
-                    qtde = Int32.Parse(items[1]);
-                    codigo = Int32.Parse(items[0]);
-                    switch (codigo)
-                    {
-                        case 1:
-                            total = 3 * qtde;
-                            break;
-                        case 2:
-                            total = 2.5 * qtde;
-                            break;
-                        case 3:
-                            total = 5 * qtde;
-                            break;
-                        case 4:
-                            total = 4.5 * qtde;
-                            break;
-                        case 5:
-                            total = 1.5 * qtde;
-                            break;
-                        default:
-                            Console.WriteLine("Erro! Item de código " + entrada + " não registrado!");
-                            break;
-                    }
-                    linha = leitor.ReadLine();
+                    case 1:
+                        total = 3 * qtde;
+                        resultado = String.Format("Total: R$ {0:0.00}", total);
+                        break;
+                    case 2:
+                        total = 2.5 * qtde;
+                        resultado = String.Format("Total: R$ {0:0.00}", total);
+                        break;
+                    case 3:
+                        total = 5 * qtde;
+                        resultado = String.Format("Total: R$ {0:0.00}", total);
+                        break;
+                    case 4:
+                        total = 4.5 * qtde;
+                        resultado = String.Format("Total: R$ {0:0.00}", total);
+                        break;
+                    case 5:
+                        total = 1.5 * qtde;
+                        resultado = String.Format("Total: R$ {0:0.00}", total);
+                        break;
+                    default:
+                        resultado = "Erro! Item de código " + entrada + " não registrado!";
+                        break;
                 }
                 leitor.Close();
                 entrada.Close();
 
+                Console.WriteLine(resultado);
+
                 Stream saida = File.Open("saida.txt", FileMode.Create);
                 StreamWriter writer = new StreamWriter(saida);
-                writer.WriteLine("Total: R$ {0:0.00}", total);
+                writer.WriteLine(resultado);
                 writer.Close();
                 saida.Close();
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
+                Console.WriteLine("Arquivo de saída criado em: {0}", Path.GetFullPath("saida.txt"));
             }
             else
             {
-                Console.WriteLine("Arquivo de leitura \"entrada.exe\" não encontrado!");
-                Console.WriteLine("Fim de Execução.");
-                Console.ReadLine();
+                Console.WriteLine("Arquivo de leitura no endereço especificado \"{0}\" não encontrado!", arquivo);
             }
-
+            Console.WriteLine("Fim de Execução.Pressione qualquer tecla para fechar o programa.");
+            Console.ReadKey();
         }
     }
 }

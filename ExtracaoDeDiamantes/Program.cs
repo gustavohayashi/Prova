@@ -19,6 +19,7 @@ namespace ExtracaoDeDiamantes
             {
                 while(n > 0)
                 {
+                    Console.Write("Digite o caso de teste: ");
                     entrada = Console.ReadLine();
                     foreach (char c in entrada)
                     {
